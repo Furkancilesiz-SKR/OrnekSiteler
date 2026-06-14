@@ -3,338 +3,582 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kahve Projeleri | Dijital Vitrin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Burak&Furkan — Proje Atölyesi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    /* ===== Orijinal Tasarım ve Renk Paleti (Korundu) ===== */
     :root {
-      --dark-bg: #111111;
-      --card-bg: #1a1a1a;
-      --espresso: #2C1A0E;
-      --gold: #C49A3A;
-      --gold-light: #e0c78a;
-      --cream: #FAF7F2;
-      --text-gray: #aaaaaa;
-      --radius: 16px;
+      --ink: #0d0c0a;
+      --ink-60: rgba(13,12,10,0.6);
+      --ink-20: rgba(13,12,10,0.12);
+      --parchment: #f5f1e8;
+      --warm-off: #faf8f3;
+      --gold-deep: #8a6520;
+      --gold-mid: #b8902e;
+      --gold-light: #d4aa4a;
+      --espresso: #2a1608;
+      --rule: rgba(13,12,10,0.10);
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --radius-lg: 18px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background-color: var(--dark-bg);
-      color: var(--cream);
-      line-height: 1.6;
-      padding-bottom: 60px;
+      font-family: 'Inter', sans-serif;
+      background: var(--parchment);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Kahve Dokulu Üst Alan */
-    header {
-      background: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.98)), 
-                  url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200') center/cover;
-      background-attachment: fixed; /* yeni: hafif parallax */
-      padding: 80px 20px;
-      text-align: center;
-      border-bottom: 1px solid #333;
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(245,241,232,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 0.5px solid var(--rule);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--gold-deep);
+      text-decoration: none;
+    }
+
+    .nav-tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 55% at 72% 38%, rgba(138,101,32,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 20% 65%, rgba(42,22,8,0.07) 0%, transparent 65%);
+    }
+
+    .hero-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(7rem, 18vw, 15rem);
+      font-weight: 400;
+      line-height: 0.85;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(138,101,32,0.22);
+      position: absolute;
+      right: 40px;
+      bottom: 60px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-mid);
+      margin-bottom: 24px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold-mid);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--espresso);
+      max-width: 680px;
       position: relative;
     }
 
-    header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
-      color: var(--gold);
-      margin-bottom: 10px;
-      font-weight: 700;
-      text-shadow: 0 0 20px rgba(196,154,58,0.3); /* yeni: hafif altın ışıltı */
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-deep);
     }
 
-    header p {
-      font-size: 1.1rem;
-      color: var(--text-gray);
-      max-width: 600px;
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink-60);
+      max-width: 460px;
+      position: relative;
+    }
+
+    .hero-scroll {
+      margin-top: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      position: relative;
+      text-decoration: none;
+    }
+
+    .hero-scroll-line {
+      width: 48px;
+      height: 1px;
+      background: var(--ink-20);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gold-mid);
+      animation: scanline 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scanline {
+      0% { left: -100%; }
+      50% { left: 0%; }
+      100% { left: 100%; }
+    }
+
+    /* ── SECTION ── */
+    .section {
+      padding: 100px 48px;
+      max-width: 1260px;
       margin: 0 auto;
     }
 
-    /* Grid Yapısı */
-    .container {
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 0 20px;
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 20px;
+      margin-bottom: 60px;
+      border-top: 0.5px solid var(--rule);
+      padding-top: 32px;
     }
 
-    .grid-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-      border-left: 4px solid var(--gold);
-      padding-left: 15px;
-      position: relative;
-      display: inline-block;
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gold-mid);
+      min-width: 28px;
     }
 
-    /* yeni: başlık altı animasyonlu çizgi */
-    .grid-title::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -8px;
-      width: 0;
-      height: 2px;
-      background-color: var(--gold);
-      transition: width 0.8s ease;
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--espresso);
     }
 
-    .grid-title.revealed::after {
-      width: 100%;
-    }
-
+    /* ── GRID ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
     }
 
-    /* Proje Kartları Tasarımı */
+    /* ── CARD ── */
     .project-card {
-      background-color: var(--card-bg);
-      border: 1px solid #222;
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: all 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex;
-      flex-direction: column;
+      display: block;
       text-decoration: none;
       color: inherit;
-      /* yeni: scroll animasyonu için başlangıç */
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s, box-shadow 0.3s;
+      background: var(--warm-off);
+      border: 0.5px solid var(--rule);
+      padding: 40px 36px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
-    .project-card.visible {
+    .project-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .project-card:hover {
+      background: #fff;
+      border-color: rgba(138,101,32,0.25);
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 28px;
+      display: block;
+      line-height: 1;
+    }
+
+    .card-index {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: rgba(138,101,32,0.35);
+      font-weight: 400;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      background: rgba(138,101,32,0.08);
+      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--espresso);
+      line-height: 1.2;
+      margin-bottom: 12px;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .card-title {
+      color: var(--gold-deep);
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--ink-60);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      transition: gap 0.2s;
+    }
+
+    .project-card:hover .card-link {
+      gap: 14px;
+    }
+
+    .card-link-arrow {
+      width: 20px;
+      height: 1px;
+      background: var(--gold-mid);
+      position: relative;
+      transition: width 0.2s;
+    }
+
+    .card-link-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 6px; height: 6px;
+      border-right: 1px solid var(--gold-mid);
+      border-top: 1px solid var(--gold-mid);
+      transform: rotate(45deg);
+    }
+
+    .project-card:hover .card-link-arrow {
+      width: 30px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--espresso);
+      color: var(--parchment);
+      padding: 48px 48px;
+    }
+
+    .stats-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .stat-cell {
+      background: var(--espresso);
+      padding: 32px 36px;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.45);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 48px;
+      border-top: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--parchment);
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold-deep);
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--ink-60);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .hero { padding: 0 24px 72px; }
+      .hero-number { font-size: 30vw; right: 16px; bottom: 40px; }
+      .section { padding: 72px 24px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .stats-bar { padding: 40px 24px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 16px; text-align: center; padding: 36px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .stats-inner { grid-template-columns: 1fr; }
+      .project-card { padding: 32px 24px 28px; }
+      .hero-title { font-size: 2.4rem; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .project-card:hover {
-      transform: translateY(-12px) scale(1.02); /* hafif büyüme */
-      border-color: var(--gold);
-      box-shadow: 0 20px 40px rgba(196, 154, 58, 0.15);
-    }
-
-    .card-banner {
-      height: 160px;
-      background: linear-gradient(135deg, var(--espresso), #111);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      border-bottom: 1px solid #222;
-      transition: background 0.5s ease;
-    }
-
-    .project-card:hover .card-banner {
-      background: linear-gradient(135deg, #3b2a1a, #1e1e1e); /* hoverda ton değişimi */
-    }
-
-    .card-content {
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .card-content h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: var(--cream);
-      margin-bottom: 10px;
-      transition: color 0.3s;
-    }
-
-    .project-card:hover .card-content h3 {
-      color: var(--gold-light);
-    }
-
-    .card-content p {
-      color: var(--text-gray);
-      font-size: 0.95rem;
-      margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .card-btn {
-      align-self: flex-start;
-      color: var(--gold);
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: gap 0.2s, color 0.3s;
-    }
-
-    .project-card:hover .card-btn {
-      gap: 10px;
-      color: var(--gold-light);
-    }
-
-    /* Alt Bilgi */
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #555;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-      margin-top: 40px;
-    }
-
-    /* ===== Yeni Eklenen Duyarlılık İyileştirmeleri ===== */
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2.2rem;
-      }
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-      .grid-title {
-        font-size: 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header {
-        padding: 60px 15px;
-      }
-      .card-content {
-        padding: 20px;
-      }
-      .card-banner {
-        height: 130px;
-        font-size: 2.8rem;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-scroll-line::after { animation: none; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Maarif Z Proje Atölyesi</h1>
-    <p>Web geliştirme yolculuğunda bugüne kadar tasarladığımız, kullanıcı deneyimine odaklanan premium web arayüzleri.</p>
-  </header>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Maarif Z</a>
+    <span class="nav-tag">Proje Atölyesi</span>
+  </nav>
 
-  <div class="container">
-    <h2 class="grid-title" id="gridTitle">Bu Zamana Kadar Yaptığımız Siteler</h2>
-    
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-number" aria-hidden="true">6</div>
+
+    <p class="hero-eyebrow">Web Geliştirme &amp; Tasarım</p>
+    <h1 class="hero-title">
+      Her arayüz<br>bir <em>hikâye</em> anlatır.
+    </h1>
+    <p class="hero-sub">
+      Kullanıcı deneyimine odaklanan premium web arayüzleri — her projede farklı bir konsept, aynı özen.
+    </p>
+    <a href="#projects" class="hero-scroll">
+      <span class="hero-scroll-line"></span>
+      Projeleri Keşfet
+    </a>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-cell">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Tamamlanan Proje</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Farklı Konsept</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Mobil Uyumlu</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">☕</div>
+        <div class="stat-label">Kahve Temalı</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" id="projects">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Bu Zamana Kadar Yaptığımız Siteler</h2>
+    </div>
+
     <div class="projects-grid">
 
-      <a href="index18.html" target="_blank" class="project-card">
-        <div class="card-banner">☕</div>
-        <div class="card-content">
-          <h3>Premium Kafe & Butik</h3>
-          <p>B.A.K & DeepSeek esintileri taşıyan, koyu temalı ve gelişmiş menü sekmelerine sahip modern kafe arayüzü.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="index18.html" target="_blank" class="project-card reveal">
+        <span class="card-index">01</span>
+        <span class="card-icon">☕</span>
+        <span class="card-tag">Premium Kafe</span>
+        <h3 class="card-title">Premium Kafe & Butik</h3>
+        <p class="card-desc">B.A.K &amp; DeepSeek esintileri taşıyan, koyu temalı ve gelişmiş menü sekmelerine sahip modern kafe arayüzü.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
-      <a href="depseek.html" target="_blank" class="project-card">
-        <div class="card-banner">✨</div>
-        <div class="card-content">
-          <h3>Kafe Ara - Butik Lezzet</h3>
-          <p>Altın tonları ve serif yazı tipleriyle harmanlanmış, şık ve yalın hatlara sahip tam boy butik kahve konsepti.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="depseek.html" target="_blank" class="project-card reveal">
+        <span class="card-index">02</span>
+        <span class="card-icon">✨</span>
+        <span class="card-tag">Butik Konsept</span>
+        <h3 class="card-title">Kafe Ara — Butik Lezzet</h3>
+        <p class="card-desc">Altın tonları ve serif yazı tipleriyle harmanlanmış, şık ve yalın hatlara sahip tam boy butik kahve konsepti.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
-      <a href="menu.html" target="_blank" class="project-card">
-        <div class="card-banner">📋</div>
-        <div class="card-content">
-          <h3>B.A.K — Dijital Menü</h3>
-          <p>Tamamen tablet ve mobil uyumlu, canlı tarih destekli ve kategori geçişli premium dijital ürün kataloğu.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="menu.html" target="_blank" class="project-card reveal">
+        <span class="card-index">03</span>
+        <span class="card-icon">📋</span>
+        <span class="card-tag">Dijital Menü</span>
+        <h3 class="card-title">B.A.K — Dijital Menü</h3>
+        <p class="card-desc">Tamamen tablet ve mobil uyumlu, canlı tarih destekli ve kategori geçişli premium dijital ürün kataloğu.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
-      <a href="index (3) (1).html" target="_blank" class="project-card">
-        <div class="card-banner">🤎</div>
-        <div class="card-content">
-          <h3>B.A.K Anasayfa & İletişim</h3>
-          <p>"Bakıyorsun, içiyorsun" mottolu, dinamik bildirim (toast) ve akıllı navigasyon vurgusuna sahip kurumsal sayfa.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="index (3) (1).html" target="_blank" class="project-card reveal">
+        <span class="card-index">04</span>
+        <span class="card-icon">🤎</span>
+        <span class="card-tag">Kurumsal Sayfa</span>
+        <h3 class="card-title">B.A.K Anasayfa & İletişim</h3>
+        <p class="card-desc">"Bakıyorsun, içiyorsun" mottolu, dinamik bildirim (toast) ve akıllı navigasyon vurgusuna sahip kurumsal sayfa.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
-      <a href="index (5) (1).html" target="_blank" class="project-card">
-        <div class="card-banner">🟢</div>
-        <div class="card-content">
-          <h3>Demo Cafe | Lezzet Durağı</h3>
-          <p>Yumuşak dokunuşlu kaydırıcı (Hero Slider), swipe desteği ve canlı yeşil tonlarıyla enerjik bir kafe demosu.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="index (5) (1).html" target="_blank" class="project-card reveal">
+        <span class="card-index">05</span>
+        <span class="card-icon">🟢</span>
+        <span class="card-tag">Kafe Demo</span>
+        <h3 class="card-title">Demo Cafe — Lezzet Durağı</h3>
+        <p class="card-desc">Yumuşak dokunuşlu kaydırıcı (Hero Slider), swipe desteği ve canlı yeşil tonlarıyla enerjik bir kafe demosu.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
-      <a href="index (4) (1).html" target="_blank" class="project-card">
-        <div class="card-banner">🌱</div>
-        <div class="card-content">
-          <h3>Starbucks Konsept Vitrin</h3>
-          <p>Göz yormayan ikonik yeşil ve krem paletiyle kurgulanmış, minimalist kart düzenine sahip ürün inceleme arayüzü.</p>
-          <span class="card-btn">Siteyi Keşfet &gt;</span>
-        </div>
+      <a href="index (4) (1).html" target="_blank" class="project-card reveal">
+        <span class="card-index">06</span>
+        <span class="card-icon">🌱</span>
+        <span class="card-tag">Ürün Vitrini</span>
+        <h3 class="card-title">Starbucks Konsept Vitrin</h3>
+        <p class="card-desc">Göz yormayan ikonik yeşil ve krem paletiyle kurgulanmış, minimalist kart düzenine sahip ürün inceleme arayüzü.</p>
+        <span class="card-link">Siteyi Keşfet <span class="card-link-arrow"></span></span>
       </a>
 
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer>
-    <p>&copy; <span id="currentYear">2026</span> Proje Geliştirme ve Yönetim Altyapısı. Tüm hakları saklıdır.</p>
+    <span class="footer-logo">Maarif Z Proje Atölyesi</span>
+    <span class="footer-copy">&copy; <span id="yr"></span> — Tüm hakları saklıdır.</span>
   </footer>
 
-  <!-- ===== Gelişmiş Etkileşimler İçin JavaScript (Yeni) ===== -->
   <script>
-    (function() {
-      // Dinamik yıl gösterimi
-      const yearSpan = document.getElementById('currentYear');
-      if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-      }
+    document.getElementById('yr').textContent = new Date().getFullYear();
 
-      // Scroll ile kart görünürlüğü ve başlık çizgisi animasyonu
-      const cards = document.querySelectorAll('.project-card');
-      const gridTitle = document.getElementById('gridTitle');
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.2 });
-
-      cards.forEach(card => observer.observe(card));
-
-      // Başlık alt çizgisi için ayrı observer
-      if (gridTitle) {
-        const titleObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('revealed');
-            }
-          });
-        }, { threshold: 0.5 });
-        titleObserver.observe(gridTitle);
-      }
-
-      // Header parallax efekti (opsiyonel, mevcut fixed zaten verildi)
-    })();
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
   </script>
 
 </body>
 </html>
+
