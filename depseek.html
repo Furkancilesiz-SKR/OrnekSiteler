@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafe Ara - Butik Kahve & Lezzet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #1a1a1a;
+            color: #f5f0e8;
+            line-height: 1.6;
+        }
+
+        /* Altın tonları */
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e0c78a;
+            --dark-bg: #1a1a1a;
+            --darker-bg: #111111;
+            --cream: #f5f0e8;
+            --grey: #888888;
+        }
+
+        /* Navigasyon */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--cream);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--gold);
+            transition: 0.3s;
+        }
+
+        /* Hero Bölümü */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--cream);
+        }
+
+        .hero-content h1 span {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.4s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: var(--gold);
+            color: #1a1a1a;
+        }
+
+        .btn-filled {
+            background-color: var(--gold);
+            color: #1a1a1a;
+            margin-left: 1rem;
+        }
+
+        .btn-filled:hover {
+            background-color: transparent;
+            color: var(--gold);
+        }
+
+        /* Bölüm Genel */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--cream);
+            font-weight: 300;
+        }
+
+        .section-title .line {
+            width: 80px;
+            height: 3px;
+            background-color: var(--gold);
+            margin: 1rem auto;
+        }
+
+        .section-title p {
+            color: #aaaaaa;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hakkımızda */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .about-text p {
+            color: #bbbbbb;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Menü */
+        .menu {
+            background-color: var(--darker-bg);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-item {
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            padding: 2rem;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+
+        .menu-item:hover {
+            border-color: var(--gold);
+        }
+
+        .menu-item .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item h4 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-item .price {
+            color: var(--cream);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .menu-item p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Galeri */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .gallery-grid img:hover {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        /* İletişim */
+        .contact {
+            background-color: var(--darker-bg);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h4 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .contact-info p {
+            color: #bbbbbb;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: var(--cream);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            background-color: var(--gold);
+            color: #1a1a1a;
+            border: none;
+            padding: 14px 40px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .contact-form button:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #222;
+        }
+
+        footer .social a {
+            color: var(--gold);
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        footer p {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                background: #111;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 2rem;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .btn-filled {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigasyon -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">KAFE <span>ARA</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Anasayfa</a></li>
+                <li><a href="#about">Hakkımızda</a></li>
+                <li><a href="#menu">Menü</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Butik <span>Kahve</span> Deneyimi</h1>
+            <p>Her yudumda tutku, her lezzette özen</p>
+            <div>
+                <a href="#menu" class="btn">Menüyü Keşfet</a>
+                <a href="#contact" class="btn btn-filled">Rezervasyon</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hakkımızda -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hikayemiz</h2>
+                <div class="line"></div>
+                <p>Kalite ve tutkunun buluşma noktası</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Kafe iç mekan">
+                </div>
+                <div class="about-text">
+                    <h3>2018'den beri...</h3>
+                    <p>Kafe Ara, şehrin kalbinde, özenle seçilmiş çekirdeklerden hazırlanan butik kahveleri ve el yapımı lezzetleriyle misafirlerini ağırlıyor. Sıcak atmosferimizde her detay sizin konforunuz için düşünüldü.</p>
+                    <p>Kahve tutkumuzu, en taze malzemelerle birleştirerek benzersiz bir deneyim sunuyoruz. İster bir iş toplantısı, ister keyifli bir sohbet için – Kafe Ara her zaman doğru adres.</p>
+                    <a href="#contact" class="btn">Bize Ulaşın</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menü -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <h2>Menümüz</h2>
+                <div class="line"></div>
+                <p>Damak tadınıza özel seçenekler</p>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="icon">☕</div>
+                    <h4>Espresso Bazlı Kahveler</h4>
+                    <p>Latte, Cappuccino, Americano, Flat White</p>
+                    <span class="price">₺45 - ₺65</span>
+                </div>
+                <div class="menu-item">
+                    <div class="icon">🥐</div>
+                    <h4>Taze Fırın Ürünleri</h4>
+                    <p>Kruvasan, Simit, Kurabiye, Muffin</p>
+                    <span class="price">₺30 - ₺55</span>
+                </div>
+                <div class="menu-item">
+                    <div class="icon">🥗</div>
+                    <h4>Hafif Atıştırmalıklar</h4>
+                    <p>Salata, Tost, Sandviç çeşitleri</p>
+                    <span class="price">₺60 - ₺95</span>
+                </div>
+                <div class="menu-item">
+                    <div class="icon">🍰</div>
+                    <h4>El Yapımı Tatlılar</h4>
+                    <p>Cheesecake, Tiramisu, Sufle</p>
+                    <span class="price">₺55 - ₺80</span>
+                </div>
+                <div class="menu-item">
+                    <div class="icon">🍵</div>
+                    <h4>Bitki Çayları</h4>
+                    <p>Papatya, Ihlamur, Yeşil Çay, Matcha</p>
+                    <span class="price">₺35 - ₺50</span>
+                </div>
+                <div class="menu-item">
+                    <div class="icon">🥤</div>
+                    <h4>Soğuk İçecekler</h4>
+                    <p>Smoothie, Milkshake, Limonata</p>
+                    <span class="price">₺50 - ₺75</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeri -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Galeri</h2>
+                <div class="line"></div>
+                <p>Anılardan kareler</p>
+            </div>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kahve">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Restoran iç">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Tatlı">
+                <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kahve sanatı">
+                <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Masa">
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Kafe">
+            </div>
+        </div>
+    </section>
+
+    <!-- İletişim -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>İletişim</h2>
+                <div class="line"></div>
+                <p>Sizi ağırlamaktan mutluluk duyarız</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h4>📍 Adres</h4>
+                    <p>Örnek Mahallesi, Kahve Sokak No:10, İstanbul</p>
+                    <h4>🕒 Çalışma Saatleri</h4>
+                    <p>Pazartesi - Cuma: 08:00 - 23:00<br>Cumartesi - Pazar: 09:00 - 01:00</p>
+                    <h4>📞 Telefon</h4>
+                    <p>+90 (212) 123 45 67</p>
+                    <h4>✉️ E-posta</h4>
+                    <p>info@kafeara.com</p>
+                </div>
+                <div class="contact-form">
+                    <input type="text" placeholder="Adınız Soyadınız">
+                    <input type="email" placeholder="E-posta Adresiniz">
+                    <textarea placeholder="Mesajınız..."></textarea>
+                    <button type="submit">Gönder</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social">
+            <a href="#">📷</a>
+            <a href="#">📘</a>
+            <a href="#">🐦</a>
+        </div>
+        <p>© 2026 Kafe Ara. Tüm hakları saklıdır. Bu site özgün olarak oluşturulmuştur.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Menü linklerine tıklayınca menüyü kapat
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

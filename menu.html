@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B.A.K — Menü</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --espresso: #2C1A0E;
+      --bark:     #5C3317;
+      --caramel:  #A0522D;
+      --cream:    #F5EFE4;
+      --latte:    #E0D2BC;
+      --ivory:    #FAF7F2;
+      --gold:     #C49A3A;
+      --text-mid: #5A3E28;
+      --text-dim: #9A7B5E;
+
+      --ff-display: 'Playfair Display', serif;
+      --ff-body:    'DM Sans', sans-serif;
+      --ff-mono:    'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--espresso);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    /* ── TABLET FRAME ── */
+    .tablet {
+      width: 100%;
+      max-width: 820px;
+      min-height: 90vh;
+      background: var(--ivory);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.55), 0 0 0 2px rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--espresso);
+      padding: 32px 40px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      font-family: var(--ff-display);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--cream);
+      letter-spacing: 0.14em;
+      line-height: 1;
+    }
+    .logo span { color: var(--gold); }
+
+    .header-right {
+      text-align: right;
+    }
+    .header-tagline {
+      font-size: 0.75rem;
+      font-style: italic;
+      color: rgba(245,239,228,0.5);
+      letter-spacing: 0.06em;
+    }
+    .header-date {
+      margin-top: 4px;
+      font-family: var(--ff-mono);
+      font-size: 0.68rem;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      background: var(--bark);
+      display: flex;
+      padding: 0 40px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .tab {
+      padding: 14px 22px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.5);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+      white-space: nowrap;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: var(--ff-body);
+    }
+
+    .tab:hover { color: var(--cream); }
+    .tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ── BODY SCROLL ── */
+    .body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 40px 48px;
+      scroll-behavior: smooth;
+    }
+
+    .body::-webkit-scrollbar { width: 5px; }
+    .body::-webkit-scrollbar-track { background: transparent; }
+    .body::-webkit-scrollbar-thumb { background: var(--latte); border-radius: 99px; }
+
+    /* ── CATEGORY PANEL ── */
+    .category { display: none; }
+    .category.active { display: block; }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .cat-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .cat-title {
+      font-family: var(--ff-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--espresso);
+    }
+
+    .cat-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── ITEMS ── */
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--latte);
+      gap: 16px;
+      transition: background 0.2s;
+    }
+
+    .item:last-child { border-bottom: none; }
+
+    .item-left {
+      flex: 1;
+    }
+
+    .item-name {
+      font-family: var(--ff-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--espresso);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .item-badge {
+      font-family: var(--ff-body);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 99px;
+      background: rgba(196,154,58,0.15);
+      color: var(--gold);
+      border: 1px solid rgba(196,154,58,0.3);
+    }
+
+    .item-desc {
+      margin-top: 4px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      max-width: 480px;
+    }
+
+    .item-price {
+      font-family: var(--ff-mono);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--caramel);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── SEPARATOR ── */
+    .section-sep {
+      margin: 28px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-sep span {
+      font-family: var(--ff-mono);
+      font-size: 0.67rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .section-sep::before, .section-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--latte);
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--cream);
+      border-top: 1px solid var(--latte);
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .footer-note {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .footer-qr {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── ALLERGEN LEGEND ── */
+    .legend {
+      margin-top: 36px;
+      padding: 20px 24px;
+      background: var(--cream);
+      border-radius: 10px;
+      border: 1px solid var(--latte);
+    }
+    .legend-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 10px;
+    }
+    .legend-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .legend-item {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      background: var(--ivory);
+      padding: 4px 10px;
+      border-radius: 99px;
+      border: 1px solid var(--latte);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      body { padding: 0; }
+      .tablet { border-radius: 0; min-height: 100vh; }
+      .header { padding: 24px 20px 20px; }
+      .tabs { padding: 0 20px; }
+      .tab { padding: 12px 14px; font-size: 0.72rem; }
+      .body { padding: 24px 20px 40px; }
+      .footer { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="tablet">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">B<span>.</span>A<span>.</span>K</div>
+    <div class="header-right">
+      <div class="header-tagline">bakıyorsun, içiyorsun ne ediyorsun.</div>
+      <div class="header-date" id="today-date"></div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" data-cat="sicak">☕ Sıcak</button>
+    <button class="tab" data-cat="soguk">🧊 Soğuk</button>
+    <button class="tab" data-cat="atistirma">🥐 Atıştırmalık</button>
+    <button class="tab" data-cat="butik">🛍️ Butik</button>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- SICAK -->
+    <div class="category active" data-cat="sicak">
+      <div class="cat-header">
+        <div class="cat-icon">☕</div>
+        <div>
+          <div class="cat-title">Sıcak İçecekler</div>
+          <div class="cat-subtitle">Günün her saatine yakışan sıcaklık</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Espresso Bazlı</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Espresso</div>
+            <div class="item-desc">Tek çekimlik yoğun İtalyan espresso. Sert, cesur, dürüst.</div>
+          </div>
+          <div class="item-price">₺55</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Doppio</div>
+            <div class="item-desc">Çift çekim espresso. Daha fazlasını isteyenler için.</div>
+          </div>
+          <div class="item-price">₺70</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Americano</div>
+            <div class="item-desc">Espresso üzerine sıcak su. Sade ve güçlü.</div>
+          </div>
+          <div class="item-price">₺60</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Latte <span class="item-badge">Popüler</span></div>
+            <div class="item-desc">Espresso üzerine kadifemsi buharla köpürtülmüş süt.</div>
+          </div>
+          <div class="item-price">₺75</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Cappuccino</div>
+            <div class="item-desc">Eşit oranlarda espresso, buharlanmış süt ve köpük.</div>
+          </div>
+          <div class="item-price">₺75</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Flat White</div>
+            <div class="item-desc">Çift ristretto, az köpüklü ince süt tabakası.</div>
+          </div>
+          <div class="item-price">₺80</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">B.A.K Mocha <span class="item-badge">İmza</span></div>
+            <div class="item-desc">Özel çikolata karışımımızla yapılan imza mocha.</div>
+          </div>
+          <div class="item-price">₺90</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Diğer Sıcak</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Matcha Latte</div>
+            <div class="item-desc">Japon seremoni matcha'sı, sıcak süt köpüğüyle.</div>
+          </div>
+          <div class="item-price">₺85</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Türk Kahvesi</div>
+            <div class="item-desc">Geleneksel usul, köpüklü, çikolatalı lokum ile.</div>
+          </div>
+          <div class="item-price">₺55</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Sıcak Çikolata</div>
+            <div class="item-desc">Bol kremalı, gerçek bitter çikolatayla hazırlanır.</div>
+          </div>
+          <div class="item-price">₺75</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Chai Latte</div>
+            <div class="item-desc">Tarçın, kakule, zencefil karışımı baharatlı çay sütü.</div>
+          </div>
+          <div class="item-price">₺70</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOGUK -->
+    <div class="category" data-cat="soguk">
+      <div class="cat-header">
+        <div class="cat-icon">🧊</div>
+        <div>
+          <div class="cat-title">Soğuk İçecekler</div>
+          <div class="cat-subtitle">Serinleten, canlandıran, dinlendiren</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Soğuk Kahve</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Cold Brew <span class="item-badge">Popüler</span></div>
+            <div class="item-desc">18 saat soğuk demlenmiş, pürüzsüz ve yoğun.</div>
+          </div>
+          <div class="item-price">₺80</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Iced Latte</div>
+            <div class="item-desc">Buz, espresso ve sütün mükemmel dengesi.</div>
+          </div>
+          <div class="item-price">₺75</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Iced Americano</div>
+            <div class="item-desc">Soğuk su üzerine çekilen espresso, buzlu.</div>
+          </div>
+          <div class="item-price">₺65</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Frappé <span class="item-badge">İmza</span></div>
+            <div class="item-desc">Buzlu, köpüklü, serinleten kafe klasiği.</div>
+          </div>
+          <div class="item-price">₺85</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Iced Matcha</div>
+            <div class="item-desc">Soğuk süt üzerine matcha, buz ve fıstık sütü seçeneğiyle.</div>
+          </div>
+          <div class="item-price">₺90</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Diğer Soğuk</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Hibiskus Lemonade</div>
+            <div class="item-desc">Taze limon suyu ve çiçek özlü ev yapımı soda.</div>
+          </div>
+          <div class="item-price">₺70</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Taze Portakal Suyu</div>
+            <div class="item-desc">Sipariş üzerine sıkılır, katkısız.</div>
+          </div>
+          <div class="item-price">₺65</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Maden Suyu</div>
+            <div class="item-desc">250 ml, doğal maden suyu.</div>
+          </div>
+          <div class="item-price">₺35</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATISTIRMA -->
+    <div class="category" data-cat="atistirma">
+      <div class="cat-header">
+        <div class="cat-icon">🥐</div>
+        <div>
+          <div class="cat-title">Atıştırmalık</div>
+          <div class="cat-subtitle">Her gün taze, her lokma özenle</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Hamur İşleri</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Tereyağlı Kruvasan <span class="item-badge">Taze</span></div>
+            <div class="item-desc">Her sabah pişirilmiş, çıtır katmanlı Fransız usulü.</div>
+          </div>
+          <div class="item-price">₺55</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Peynirli Poğaça</div>
+            <div class="item-desc">Günlük pişirilmiş, beyaz peynir ve dereotlu.</div>
+          </div>
+          <div class="item-price">₺45</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Zeytinli Açma</div>
+            <div class="item-desc">Bol zeytinyağlı, yumuşak hamurlu fırın açması.</div>
+          </div>
+          <div class="item-price">₺45</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Tatlılar</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Cheesecake <span class="item-badge">Popüler</span></div>
+            <div class="item-desc">Fırın usulü, portakal kabuğu rendesiyle hafifçe çiğ bırakılmış.</div>
+          </div>
+          <div class="item-price">₺75</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Tuzlu Karamel Kurabiye <span class="item-badge">İmza</span></div>
+            <div class="item-desc">Her lokmada tatlı-tuzlu ikilem. Vazgeçilemez.</div>
+          </div>
+          <div class="item-price">₺45</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Brownie</div>
+            <div class="item-desc">Yoğun bitter çikolatalı, içi cıvık kalan fırın brownie.</div>
+          </div>
+          <div class="item-price">₺60</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Tiramisu</div>
+            <div class="item-desc">Maskarpone, espresso ve kakao ile ev yapımı usulde.</div>
+          </div>
+          <div class="item-price">₺80</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUTIK -->
+    <div class="category" data-cat="butik">
+      <div class="cat-header">
+        <div class="cat-icon">🛍️</div>
+        <div>
+          <div class="cat-title">Butik Ürünler</div>
+          <div class="cat-subtitle">Kafe deneyimini eve taşı</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Kahve</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">B.A.K Karışım Çekirdek <span class="item-badge">Özel</span></div>
+            <div class="item-desc">250 gr, orta-koyu kavrum, meyvemsi ve bitter notalar.</div>
+          </div>
+          <div class="item-price">₺185</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Tek Kökenli Etiyopya</div>
+            <div class="item-desc">250 gr, hafif kavrum, çiçeksi ve narenciyeli aromalar.</div>
+          </div>
+          <div class="item-price">₺210</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Kolombiya Huila</div>
+            <div class="item-desc">250 gr, orta kavrum, karamel ve fındık notaları.</div>
+          </div>
+          <div class="item-price">₺200</div>
+        </div>
+      </div>
+
+      <div class="section-sep"><span>Aksesuar & Hediye</span></div>
+      <div class="items">
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">B.A.K Seramik Kupa</div>
+            <div class="item-desc">El yapımı, logo baskılı, 300 ml. Sınırlı stok.</div>
+          </div>
+          <div class="item-price">₺220</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">Hediye Seti <span class="item-badge">Popüler</span></div>
+            <div class="item-desc">Kupa + 250 gr çekirdek + 4'lü kurabiye. Kutulu.</div>
+          </div>
+          <div class="item-price">₺380</div>
+        </div>
+        <div class="item">
+          <div class="item-left">
+            <div class="item-name">French Press (350 ml)</div>
+            <div class="item-desc">Cam gövdeli, paslanmaz çelik piston, 2 kişilik.</div>
+          </div>
+          <div class="item-price">₺290</div>
+        </div>
+      </div>
+
+      <!-- Allergen note for butik -->
+      <div class="legend">
+        <div class="legend-title">Bilgilendirme</div>
+        <div class="legend-items">
+          <div class="legend-item">🌱 Vegan seçenek mevcut</div>
+          <div class="legend-item">🥛 Bitki bazlı süt +₺15</div>
+          <div class="legend-item">☕ Demleme danışmanlığı ücretsiz</div>
+          <div class="legend-item">📦 Kargo ile gönderim yapılır</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-note">Fiyatlara KDV dahildir. Allerjen bilgisi için personele sorunuz.</div>
+    <div class="footer-qr">bak.com.tr</div>
+  </div>
+
+</div><!-- /tablet -->
+
+<script>
+  /* Tarih */
+  const days = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+  const months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+  const now = new Date();
+  document.getElementById('today-date').textContent =
+    `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+
+  /* Tab geçişi */
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector(`.category[data-cat="${tab.dataset.cat}"]`).classList.add('active');
+      document.querySelector('.body').scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>

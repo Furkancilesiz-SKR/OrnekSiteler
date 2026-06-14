@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Kafe & Butik</title>
+    <style>
+        /* Temel Ayarlar ve Renk Paleti (Starbucks Esintili) */
+        :root {
+            --primary-green: #006241;
+            --accent-green: #1e3932;
+            --light-bg: #f2f0eb;
+            --text-dark: #000000;
+            --text-light: #ffffff;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigasyon Barı */
+        header {
+            background-color: var(--text-light);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .btn-order {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-order:hover {
+            background-color: var(--accent-green);
+        }
+
+        /* Hero (Ana Görsel) Alanı */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--accent-green);
+            color: var(--text-light);
+            padding: 60px 5%;
+            max-width: 1400px;
+            margin: 40px auto;
+            border-radius: 12px;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            background-color: #a8d5ba; /* Placeholder görsel rengi */
+            height: 400px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* Ürünler / Menü Alanı */
+        .products {
+            padding: 60px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .products-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: var(--text-dark);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--text-light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 250px;
+            background-color: #e2e2e2;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .product-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-light);
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 2px solid #e2e2e2;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content h1 { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">Marka Adı</div>
+            <ul class="nav-links">
+                <li><a href="#">Menü</a></li>
+                <li><a href="#">Hakkımızda</a></li>
+                <li><a href="#">Mağazalar</a></li>
+            </ul>
+            <a href="#" class="btn-order" onclick="alert('Sipariş modülü entegre edilecek!')">Sipariş Ver</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Yeni Sezon Lezzetleriyle Tanış</h1>
+            <p>Özenle seçilmiş çekirdekler ve günlük hazırlanan atıştırmalıklar ile gününe enerji kat.</p>
+            <a href="#" class="btn-order">Detayları İncele</a>
+        </div>
+        <div class="hero-image">
+            [Yüksek Kaliteli Ürün/Mekan Görseli]
+        </div>
+    </section>
+
+    <section class="products">
+        <h2 class="products-title">Öne Çıkanlar</h2>
+        <div class="product-grid">
+            <!-- Ürün Kartı 1 -->
+            <div class="product-card">
+                <div class="product-img"></div>
+                <div class="product-info">
+                    <h3>Karamelli Frappuccino</h3>
+                    <p>Serinletici ve tatlı bir mola.</p>
+                    <a href="#" style="color: var(--primary-green); font-weight: bold; text-decoration: none;">İncele ></a>
+                </div>
+            </div>
+            <!-- Ürün Kartı 2 -->
+            <div class="product-card">
+                <div class="product-img"></div>
+                <div class="product-info">
+                    <h3>Klasik Filtre Kahve</h3>
+                    <p>Güne zinde başlamak isteyenlere.</p>
+                    <a href="#" style="color: var(--primary-green); font-weight: bold; text-decoration: none;">İncele ></a>
+                </div>
+            </div>
+            <!-- Ürün Kartı 3 -->
+            <div class="product-card">
+                <div class="product-img"></div>
+                <div class="product-info">
+                    <h3>Çikolatalı Muffin</h3>
+                    <p>Kahvenin en iyi eşlikçisi.</p>
+                    <a href="#" style="color: var(--primary-green); font-weight: bold; text-decoration: none;">İncele ></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Marka Adı. Tüm hakları saklıdır. | Geliştirici: Yönetim & Altyapı</p>
+    </footer>
+
+    <script>
+        // İleride menü filtreleme, sepete ekleme veya slider işlemleri için eklenecek JS alanı.
+        console.log("Sistem başarıyla yüklendi.");
+    </script>
+</body>
+</html>

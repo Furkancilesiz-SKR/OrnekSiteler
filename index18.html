@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium Kafe & Butik Kahve</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* ==========================================
+       RENK PALETİ VE DEĞİŞKENLER (B.A.K & DeepSeek Esintisi)
+       ========================================== */
+    :root {
+      --espresso:    #2C1A0E;
+      --bark:        #5C3317;
+      --caramel:     #A0522D;
+      --cream:       #F5EFE4;
+      --latte:       #DDD0BA;
+      --ivory:       #FAF7F2;
+      --gold:        #C49A3A;
+      --gold-light:  #E0C78A;
+      --text-dark:   #1E1209;
+      --text-mid:    #5A3E28;
+      --text-light:  #9A7B5E;
+      
+      --ff-display:  'Playfair Display', serif;
+      --ff-body:     'DM Sans', sans-serif;
+      --ff-mono:     'DM Mono', monospace;
+      
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      --transition: all 0.3s ease;
+    }
+
+    /* Temel Ayarlar */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--ff-body);
+      background-color: var(--ivory);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* ==========================================
+       NAVİGASYON BARESİ
+       ========================================== */
+    header {
+      background-color: rgba(250, 247, 242, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--latte);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--espresso);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--gold);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-mid);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--gold);
+    }
+
+    /* ==========================================
+       HERO (GİRİŞ) ALANI
+       ========================================== */
+    .hero {
+      background: linear-gradient(rgba(44, 26, 14, 0.6), rgba(44, 26, 14, 0.75)), 
+                  url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1920') no-repeat center center/cover;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: var(--ivory);
+      padding: 0 2rem;
+    }
+
+    .hero h1 {
+      font-family: var(--ff-display);
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      color: var(--cream);
+      font-weight: 300;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--gold);
+      color: var(--ivory);
+      padding: 0.8rem 2.5rem;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: var(--transition);
+      border: 1px solid var(--gold);
+    }
+
+    .btn:hover {
+      background-color: transparent;
+      color: var(--gold);
+    }
+
+    /* ==========================================
+       ÖNE ÇIKAN ÖZELLİKLER (GRID BÖLÜMÜ)
+       ========================================== */
+    .section-title {
+      text-align: center;
+      font-family: var(--ff-display);
+      font-size: 2.5rem;
+      color: var(--espresso);
+      margin: 4rem 0 1rem 0;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-family: var(--ff-mono);
+      margin-bottom: 3rem;
+      font-size: 0.9rem;
+    }
+
+    .features-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+
+    .feature-card {
+      background-color: white;
+      padding: 2.5rem 2rem;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      border: 1px solid rgba(221, 208, 186, 0.3);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-family: var(--ff-display);
+      margin-bottom: 1rem;
+      color: var(--espresso);
+    }
+
+    /* ==========================================
+       INTERAKTİF MENÜ ALANI (bak-menu.html mantığı)
+       ========================================== */
+    .menu-section {
+      background-color: var(--cream);
+      padding: 4rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .tabs-container {
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: white;
+      border: 1px solid var(--latte);
+      padding: 0.6rem 1.5rem;
+      font-family: var(--ff-body);
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      border-radius: 30px;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background-color: var(--espresso);
+      color: var(--ivory);
+      border-color: var(--espresso);
+    }
+
+    .menu-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    .menu-grid.active {
+      display: grid;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .item-details h4 {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      color: var(--espresso);
+      margin-bottom: 0.3rem;
+    }
+
+    .item-details p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .item-price {
+      font-family: var(--ff-mono);
+      font-weight: 600;
+      color: var(--caramel);
+      font-size: 1.1rem;
+    }
+
+    /* ==========================================
+       İLETİŞİM VE ÇALIŞMA SAATLERİ (DeepSeek Esintisi)
+       ========================================== */
+    .contact-section {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 4rem;
+    }
+
+    .contact-info h3, .contact-form h3 {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      color: var(--espresso);
+      margin-bottom: 1.5rem;
+    }
+
+    .info-block {
+      margin-bottom: 1.5rem;
+    }
+
+    .info-block h4 {
+      font-size: 1rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      font-family: var(--ff-mono);
+    }
+
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--latte);
+      background-color: white;
+      border-radius: 4px;
+      font-family: var(--ff-body);
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .contact-form button {
+      background-color: var(--espresso);
+      color: white;
+      border: none;
+      padding: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border-radius: 4px;
+    }
+
+    .contact-form button:hover {
+      background-color: var(--caramel);
+    }
+
+    /* ==========================================
+       FOOTER (ALT BİLGİ)
+       ========================================== */
+    footer {
+      background-color: var(--espresso);
+      color: var(--cream);
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links a {
+      color: var(--latte);
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      color: var(--gold);
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Mobil Uyum */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .menu-grid { grid-template-columns: 1fr; }
+      nav { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">B.A.K<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Ana Sayfa</a></li>
+        <li><a href="#ozellikler">Özellikler</a></li>
+        <li><a href="#menu">Menü</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Lezzetin ve Kahvenin Buluşma Noktası</h1>
+    <p>Özenle seçilmiş nitelikli kahve çekirdekleri, taze kavrum ve huzurlu bir atmosfer ile güne mükemmel bir mola verin.</p>
+    <a href="#menu" class="btn">Menüyü Keşfet</a>
+  </section>
+
+  <section id="ozellikler">
+    <h2 class="section-title">Neden Biz?</h2>
+    <p class="section-subtitle">// AYRICALIKLI KAHVE DENEYİMİ</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-seedling"></i>
+        <h3>Nitelikli Çekirdekler</h3>
+        <p>Dünyanın en seçkin kahve çiftliklerinden doğrudan adil ticaret ile getirilen %100 Arabica çekirdekleri.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-fire-burner"></i>
+        <h3>Usta Kavrum</h3>
+        <p>Her çekirdeğin kendi karakterini ve aromatik profilini ortaya çıkaran haftalık taze kavrum reçeteleri.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-mug-hot"></i>
+        <h3>Nitelikli Demleme</h3>
+        <p>V60, Chemex ve Aeropress yöntemleriyle, kahve kimyasına uygun hassas tartım ve demleme adımları.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="menu-section">
+    <h2 class="section-title">Menümüz</h2>
+    <p class="section-subtitle">// ÖZENLE HAZIRLANAN LEZZETLER</p>
+    
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="openMenu(event, 'espresso-tab')">Espresso Bazlı</button>
+      <button class="tab-btn" onclick="openMenu(event, 'demleme-tab')">Filtre & Demleme</button>
+      <button class="tab-btn" onclick="openMenu(event, 'tatli-tab')">Tatlılar & Mutfak</button>
+    </div>
+
+    <div id="espresso-tab" class="menu-grid active">
+      <div class="menu-item">
+        <div class="item-details">
+          <h4>Latte <span>🥛</span></h4>
+          <p>Çift shot espresso, kadifemsi süt kreması</p>
+        </div>
+        <div class="item-price">₺85</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-details">
+          <h4>Karamelli Frappuccino</h4>
+          <p>Buzlu, karamel soslu ve krema eşliğinde serinletici mola</p>
+        </div>
+        <div class="item-price">₺110</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-details">
+          <h4>Cortado</h4>
+          <p>Eşit oranda espresso ve yoğunlaştırılmış sıcak süt</p>
+        </div>
+        <div class="item-price">₺80</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-details">
+          <h4>Iced Latte</h4>
+          <p>Buzlu süt ve espresso birlikteliği</p>
+        </div>
+        <div class="item-price">₺90</div>
+      </div>
+    </div>
+
+    <div id="demleme-tab" class="menu-grid">
+      <div class="menu-item">
+        <div class="item-details">
+          <h4>Klasik Filtre Kahve</h4>
+          <p>Güne zinde başlamak isteyenlere dengeli ve pürüzsüz içim</p>
+        </div>
+        <div class="item-price">₺70</div>
+      </div>

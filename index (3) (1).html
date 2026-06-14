@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B.A.K — bakıyorsun, içiyorsun ne ediyorsun.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================
+       TOKENS
+    ============================ */
+    :root {
+      --espresso:    #2C1A0E;
+      --bark:        #5C3317;
+      --caramel:     #A0522D;
+      --cream:       #F5EFE4;
+      --latte:       #DDD0BA;
+      --ivory:       #FAF7F2;
+      --gold:        #C49A3A;
+      --text-dark:   #1E1209;
+      --text-mid:    #5A3E28;
+      --text-light:  #9A7B5E;
+
+      --ff-display:  'Playfair Display', serif;
+      --ff-body:     'DM Sans', sans-serif;
+      --ff-mono:     'DM Mono', monospace;
+
+      --nav-h: 72px;
+      --radius: 4px;
+      --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--ivory);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    a  { text-decoration: none; color: inherit; }
+
+    /* ============================
+       NAVIGATION
+    ============================ */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      background: transparent;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    #nav.scrolled {
+      background: rgba(44,26,14,0.96);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      font-family: var(--ff-display);
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: var(--cream);
+      letter-spacing: 0.12em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; gap: 2.4rem; list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.85;
+      transition: opacity var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    /* hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--cream); border-radius: 2px; transition: var(--transition); }
+
+    /* mobile menu */
+    #mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 99;
+      background: var(--espresso);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+
+    #mobile-menu.open { display: flex; }
+    #mobile-menu a {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      color: var(--cream);
+      transition: color var(--transition);
+    }
+    #mobile-menu a:hover { color: var(--gold); }
+    #mobile-menu .close-btn {
+      position: absolute; top: 24px; right: 28px;
+      font-size: 2rem; color: var(--cream); cursor: pointer;
+      background: none; border: none;
+    }
+
+    /* ============================
+       HERO
+    ============================ */
+    #hero {
+      position: relative;
+      height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--espresso);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 60% 40%, rgba(160,82,45,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 20% 80%, rgba(196,154,58,0.15) 0%, transparent 60%),
+        var(--espresso);
+    }
+
+    /* animated steam circles */
+    .steam {
+      position: absolute;
+      bottom: 28%; left: 50%;
+      transform: translateX(-50%);
+    }
+    .steam-ring {
+      position: absolute;
+      border: 2px solid rgba(245,239,228,0.12);
+      border-radius: 50%;
+      animation: steam-rise 4s ease-out infinite;
+      opacity: 0;
+    }
+    .steam-ring:nth-child(1) { width: 80px; height: 80px; left:-40px; bottom: 0; animation-delay: 0s; }
+    .steam-ring:nth-child(2) { width: 120px; height: 120px; left:-60px; bottom: 0; animation-delay: 1s; }
+    .steam-ring:nth-child(3) { width: 160px; height: 160px; left:-80px; bottom: 0; animation-delay: 2s; }
+
+    @keyframes steam-rise {
+      0%   { opacity: 0; transform: translateY(0) scale(0.6); }
+      30%  { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(-200px) scale(1.4); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 0 20px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fade-up 0.8s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: var(--ff-display);
+      font-size: clamp(4rem, 12vw, 9rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--cream);
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fade-up 0.8s 0.5s forwards;
+    }
+
+    .hero-title .dot { color: var(--gold); }
+
+    .hero-tagline {
+      margin-top: 1.6rem;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      font-weight: 300;
+      color: var(--latte);
+      letter-spacing: 0.06em;
+      font-style: italic;
+      opacity: 0;
+      animation: fade-up 0.8s 0.7s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 3rem;
+      display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0;
+      animation: fade-up 0.8s 0.9s forwards;
+    }
+
+    .btn-primary {
+      padding: 0.9rem 2.4rem;
+      background: var(--gold);
+      color: var(--espresso);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      border: 2px solid var(--gold);
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .btn-primary:hover { background: transparent; color: var(--gold); }
+
+    .btn-ghost {
+      padding: 0.9rem 2.4rem;
+      background: transparent;
+      color: var(--cream);
+      font-weight: 500;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      border: 2px solid rgba(245,239,228,0.4);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-ghost:hover { border-color: var(--cream); }
+
+    .scroll-indicator {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: fade-up 1s 1.2s forwards;
+    }
+    .scroll-indicator span {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-light);
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-pulse 2s ease-in-out infinite;
+    }
+    @keyframes scroll-pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================
+       SECTION BASE
+    ============================ */
+    section { padding: 100px 5vw; }
+
+    .section-label {
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--espresso);
+      max-width: 640px;
+    }
+
+    .section-title em { font-style: italic; color: var(--caramel); }
+
+    .divider {
+      width: 48px; height: 2px;
+      background: var(--gold);
+      margin: 1.6rem 0;
+    }
+
+    /* ============================
+       MENU
+    ============================ */
+    #menu {
+      background: var(--cream);
+    }
+
+    .menu-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .menu-tabs {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .tab-btn {
+      padding: 0.55rem 1.4rem;
+      border: 1.5px solid var(--latte);
+      border-radius: 999px;
+      background: transparent;
+      font-family: var(--ff-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--espresso);
+      border-color: var(--espresso);
+      color: var(--cream);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .menu-card {
+      background: var(--ivory);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--latte);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(44,26,14,0.12);
+    }
+
+    .menu-card-img {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      background: linear-gradient(135deg, var(--latte), var(--cream));
+    }
+
+    .menu-card-body { padding: 1.2rem 1.4rem 1.4rem; }
+
+    .menu-card-name {
+      font-family: var(--ff-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--espresso);
+    }
+
+    .menu-card-desc {
+      margin-top: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .menu-card-price {
+      margin-top: 0.9rem;
+      font-family: var(--ff-mono);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--caramel);
+    }
+
+    .menu-card[data-cat] { display: none; }
+    .menu-card.visible   { display: block; }
+
+    /* ============================
+       ABOUT
+    ============================ */
+    #about {
+      background: var(--espresso);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(145deg, var(--bark), var(--caramel));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 120px; height: 120px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .about-badge strong {
+      font-family: var(--ff-display);
+      font-size: 1.8rem;
+      color: var(--espresso);
+      line-height: 1;
+    }
+    .about-badge span {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--espresso);
+      margin-top: 2px;
+    }
+
+    .about-content .section-label { color: var(--gold); }
+    .about-content .section-title { color: var(--cream); }
+    .about-content .section-title em { color: var(--caramel); }
+
+    .about-text {
+      margin-top: 1.4rem;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--latte);
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .stat {
+      border-left: 2px solid var(--caramel);
+      padding-left: 1rem;
+    }
+
+    .stat-num {
+      font-family: var(--ff-display);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ============================
+       GALLERY
+    ============================ */
+    #gallery { background: var(--ivory); }
+
+    .gallery-grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(2, 260px);
+      gap: 12px;
+    }
+
+    .gallery-item {
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+      transition: transform var(--transition);
+      cursor: pointer;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+
+    .gallery-item:nth-child(1) { grid-column: 1/6; grid-row: 1; background: linear-gradient(135deg, #6B3A1F, #A0522D); }
+    .gallery-item:nth-child(2) { grid-column: 6/9; grid-row: 1; background: linear-gradient(135deg, #C49A3A, #8B6914); }
+    .gallery-item:nth-child(3) { grid-column: 9/13; grid-row: 1; background: linear-gradient(135deg, #3E2208, #7A3A1A); }
+    .gallery-item:nth-child(4) { grid-column: 1/4; grid-row: 2; background: linear-gradient(135deg, #DDD0BA, #A89070); }
+    .gallery-item:nth-child(5) { grid-column: 4/9; grid-row: 2; background: linear-gradient(135deg, #5C3317, #2C1A0E); }
+    .gallery-item:nth-child(6) { grid-column: 9/13; grid-row: 2; background: linear-gradient(135deg, #A0522D, #C49A3A); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.8rem 1rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.6));
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
+      font-family: var(--ff-mono);
+      letter-spacing: 0.1em;
+    }
+    .gallery-item { position: relative; }
+
+    /* ============================
+       BRANCHES
+    ============================ */
+    #branches { background: var(--cream); }
+
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .branch-card {
+      background: var(--ivory);
+      border: 1px solid var(--latte);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .branch-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(44,26,14,0.1);
+    }
+
+    .branch-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--caramel), var(--gold));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .branch-name {
+      font-family: var(--ff-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--espresso);
+    }
+
+    .branch-address {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .branch-hours {
+      margin-top: 1rem;
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+      color: var(--caramel);
+      letter-spacing: 0.05em;
+    }
+
+    .branch-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(196,154,58,0.15);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      border: 1px solid rgba(196,154,58,0.3);
+    }
+
+    /* map placeholder */
+    .map-placeholder {
+      margin-top: 3.5rem;
+      height: 340px;
+      background: linear-gradient(135deg, var(--latte), var(--cream));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem;
+      border: 2px dashed var(--latte);
+      color: var(--text-mid);
+      font-size: 1rem;
+      font-family: var(--ff-mono);
+      letter-spacing: 0.1em;
+    }
+    .map-placeholder .map-icon { font-size: 3rem; }
+
+    /* ============================
+       CONTACT
+    ============================ */
+    #contact {
+      background: var(--espresso);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5vw;
+      align-items: start;
+    }
+
+    .contact-info .section-label { color: var(--gold); }
+    .contact-info .section-title { color: var(--cream); }
+
+    .contact-details {
+      margin-top: 2rem;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+
+    .contact-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(196,154,58,0.15);
+      border: 1px solid rgba(196,154,58,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+
+    .contact-text { color: var(--latte); font-size: 0.9rem; line-height: 1.6; }
+    .contact-text strong { color: var(--cream); display: block; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+
+    .contact-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(245,239,228,0.1);
+      border-radius: 10px;
+      padding: 2.4rem;
+    }
+
+    .form-group { margin-bottom: 1.2rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(245,239,228,0.15);
+      border-radius: var(--radius);
+      color: var(--cream);
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(245,239,228,0.3); }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--gold);
+    }
+
+    .form-group select option { background: var(--espresso); color: var(--cream); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 1rem;
+      background: var(--gold);
+      color: var(--espresso);
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform 0.15s;
+    }
+    .form-submit:hover { background: #D4AA4A; }
+    .form-submit:active { transform: scale(0.98); }
+
+    /* ============================
+       FOOTER
+    ============================ */
+    #footer {
+      background: var(--text-dark);
+      padding: 60px 5vw 32px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3vw;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,239,228,0.1);
+    }
+
+    .footer-brand .nav-logo {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+
+    .footer-socials {
+      display: flex; gap: 0.6rem; margin-top: 1.5rem;
+    }
+
+    .social-btn {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+    .social-btn:hover { background: var(--gold); }
+
+    .footer-col h4 {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+
+    .footer-col ul li a {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1.8rem;
+      font-family: var(--ff-mono);
+      font-size: 0.72rem;
+      color: rgba(154,123,94,0.6);
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    /* ============================
+       SCROLL REVEAL
+    ============================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ============================
+       TOAST
+    ============================ */
+    #toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 1rem 1.6rem;
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: var(--transition);
+    }
+    #toast.show { transform: none; opacity: 1; }
+
+    /* ============================
+       RESPONSIVE
+    ============================ */
+    @media (max-width: 900px) {
+      #about {
+        grid-template-columns: 1fr;
+        padding: 60px 5vw;
+      }
+
+      .about-badge {
+        right: 10px; bottom: -16px;
+        width: 96px; height: 96px;
+      }
+
+      .contact-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .gallery-item { grid-column: auto !important; grid-row: auto !important; height: 180px; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --nav-h: 60px; }
+      section { padding: 70px 5vw; }
+
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .footer-inner { grid-template-columns: 1fr; }
+
+      .about-stats { grid-template-columns: 1fr 1fr; }
+
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">B<span>.</span>A<span>.</span>K</a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menü</a></li>
+      <li><a href="#about">Hakkımızda</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#branches">Şubeler</a></li>
+      <li><a href="#contact">İletişim</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" aria-label="Menüyü aç">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" role="dialog" aria-modal="true">
+    <button class="close-btn" id="close-menu">✕</button>
+    <a href="#menu" class="mob-link">Menü</a>
+    <a href="#about" class="mob-link">Hakkımızda</a>
+    <a href="#gallery" class="mob-link">Galeri</a>
+    <a href="#branches" class="mob-link">Şubeler</a>
+    <a href="#contact" class="mob-link">İletişim</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="steam">
+      <div class="steam-ring"></div>
+      <div class="steam-ring"></div>
+      <div class="steam-ring"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">2024'ten beri — kaliteli anlar</p>
+      <h1 class="hero-title">B<span class="dot">.</span>A<span class="dot">.</span>K</h1>
+      <p class="hero-tagline">bakıyorsun, içiyorsun ne ediyorsun.</p>
+      <div class="hero-cta">
+        <a href="#menu" class="btn-primary">Menüyü Keşfet</a>
+        <a href="#branches" class="btn-ghost">Şube Bul</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Aşağı kaydır</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="menu-header">
+      <div>
+        <p class="section-label reveal">— Menümüz</p>
+        <h2 class="section-title reveal">Her yudumda bir <em>hikâye</em> var.</h2>
+        <div class="divider reveal"></div>
+        <div class="menu-tabs reveal">
+          <button class="tab-btn active" data-filter="sicak">☕ Sıcak İçecekler</button>
+          <button class="tab-btn" data-filter="soguk">🧊 Soğuk İçecekler</button>
+          <button class="tab-btn" data-filter="atistirma">🥐 Atıştırmalık</button>
+          <button class="tab-btn" data-filter="butik">🛍️ Butik Ürünler</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-grid" id="menu-grid">
+      <!-- Sıcak -->
+      <div class="menu-card visible" data-cat="sicak">
+        <div class="menu-card-img">☕</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Espresso</div>
+          <div class="menu-card-desc">Tek çekimlik yoğun İtalyan espresso. Sert, cesur, dürüst.</div>
+          <div class="menu-card-price">₺55</div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="sicak">
+        <div class="menu-card-img">🥛</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Latte</div>
+          <div class="menu-card-desc">Espresso üzerine kadifemsi buharla köpürtülmüş süt.</div>
+          <div class="menu-card-price">₺75</div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="sicak">
+        <div class="menu-card-img">🍵</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Matcha Latte</div>
+          <div class="menu-card-desc">Japon seremoni matcha'sı, sıcak süt köpüğüyle buluşuyor.</div>
+          <div class="menu-card-price">₺85</div>
+        </div>
+      </div>
+      <div class="menu-card visible" data-cat="sicak">
+        <div class="menu-card-img">🍫</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">B.A.K Mocha</div>
+          <div class="menu-card-desc">Kendi özel çikolata karışımımızla yapılan imza mocha.</div>
+          <div class="menu-card-price">₺90</div>
+        </div>
+      </div>
+      <!-- Soğuk -->
+      <div class="menu-card" data-cat="soguk">
+        <div class="menu-card-img">🧊</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Cold Brew</div>
+          <div class="menu-card-desc">18 saat soğuk demlenmiş, pürüzsüz ve yoğun.</div>
+          <div class="menu-card-price">₺80</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="soguk">
+        <div class="menu-card-img">🫧</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Iced Latte</div>
+          <div class="menu-card-desc">Buz, espresso ve sütün mükemmel dengesi.</div>
+          <div class="menu-card-price">₺75</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="soguk">
+        <div class="menu-card-img">🍹</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Hibiskus Lemonade</div>
+          <div class="menu-card-desc">Taze sıkılmış limon ve çiçek özlü ev yapımı soda.</div>
+          <div class="menu-card-price">₺70</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="soguk">
+        <div class="menu-card-img">🥤</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Frappé</div>
+          <div class="menu-card-desc">Buzlu, köpüklü, serinleten kafe klasiği.</div>
+          <div class="menu-card-price">₺85</div>
+        </div>
+      </div>
+      <!-- Atıştırmalık -->
+      <div class="menu-card" data-cat="atistirma">
+        <div class="menu-card-img">🥐</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Tereyağlı Kruvasan</div>
+          <div class="menu-card-desc">Her sabah taze pişirilmiş, çıtır katmanlı Fransız usulü.</div>
+          <div class="menu-card-price">₺55</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="atistirma">
+        <div class="menu-card-img">🍰</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Cheesecake</div>
+          <div class="menu-card-desc">Fırın usulü, portakal kabuğu rendesiyle hafifçe çiğ bırakılmış.</div>
+          <div class="menu-card-price">₺75</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="atistirma">
+        <div class="menu-card-img">🧆</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Tuzlu Karamel Kurabiye</div>
+          <div class="menu-card-desc">İmzamız. Her lokmada tatlı-tuzlu ikilem.</div>
+          <div class="menu-card-price">₺45</div>
+        </div>
+      </div>
+      <!-- Butik -->
+      <div class="menu-card" data-cat="butik">
+        <div class="menu-card-img">🫙</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">B.A.K Kahve Çekirdeği</div>
+          <div class="menu-card-desc">250 gr, özel karışım, orta-koyu kavrum.</div>
+          <div class="menu-card-price">₺185</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="butik">
+        <div class="menu-card-img">🎁</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">Hediye Seti</div>
+          <div class="menu-card-desc">Fincan + çekirdek + kurabiye. Sevdikleriniz için.</div>
+          <div class="menu-card-price">₺320</div>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="butik">
+        <div class="menu-card-img">☕</div>
+        <div class="menu-card-body">
+          <div class="menu-card-name">B.A.K Kupa</div>
+          <div class="menu-card-desc">Logo baskılı, el yapımı seramik, 300 ml.</div>
+          <div class="menu-card-price">₺220</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-frame">☕</div>
+      <div class="about-badge">
+        <strong>10+</strong>
+        <span>Yıllık Deneyim</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <p class="section-label reveal">— Biz Kimiz</p>
+      <h2 class="section-title reveal">Sadece bir içecek değil,<br><em>bir duruş.</em></h2>
+      <div class="divider reveal"></div>
+      <p class="about-text reveal">
+        B.A.K; kafeler, bütikler ve büfeler için tasarlanmış bir deneyim şablonudur.
+        Her işletmenin kendine özgü bir sesi vardır — biz o sesi bulmana yardım ederiz.
+        Kahvenin kokusu, tezgâhın dokusu, müşterinin gülümsemesi: bunların hepsi
+        birer detay değil, birer karardır.
+      </p>
+      <p class="about-text reveal" style="margin-top:1rem;">
+        2014'ten bu yana yüzlerce küçük işletmenin hikâyesini dijitale taşıdık.
+        Şimdi sıra sende.
+      </p>
+      <div class="about-stats reveal">
+        <div class="stat">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Mutlu Müşteri</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Şehir</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">10</div>
+          <div class="stat-label">Yıl</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <p class="section-label reveal">— Atmosfer</p>
+    <h2 class="section-title reveal">Bir bakışta <em>hissettiririz.</em></h2>
+    <div class="divider reveal"></div>
+
+    <div class="gallery-grid reveal">
+      <div class="gallery-item">
+        ☕
+        <div class="gallery-caption">Sabah ritüeli</div>
+      </div>
+      <div class="gallery-item">
+        🌿
+        <div class="gallery-caption">Taze malzeme</div>
+      </div>
+      <div class="gallery-item">
+        🪑
+        <div class="gallery-caption">Rahat köşeler</div>
+      </div>
+      <div class="gallery-item">
+        📖
+        <div class="gallery-caption">Kitap saatleri</div>
+      </div>
+      <div class="gallery-item">
+        🎶
+        <div class="gallery-caption">Canlı müzik</div>
+      </div>
+      <div class="gallery-item">
+        🎁
+        <div class="gallery-caption">Butik ürünler</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRANCHES -->
+  <section id="branches">
+    <p class="section-label reveal">— Şubelerimiz</p>
+    <h2 class="section-title reveal">Sana en <em>yakın B.A.K</em>'ı bul.</h2>
+    <div class="divider reveal"></div>
+
+    <div class="branches-grid">
+      <div class="branch-card reveal">
+        <div class="branch-icon">📍</div>
+        <div class="branch-name">B.A.K Beyoğlu</div>
+        <div class="branch-address">İstiklal Caddesi No: 42, Beyoğlu, İstanbul</div>
+        <div class="branch-hours">Pzt–Cum: 07:00 – 22:00 | Hft Sonu: 08:00 – 23:00</div>
+        <div class="branch-badge">⭐ Amiral Gemi Şube</div>
+      </div>
+      <div class="branch-card reveal">
+        <div class="branch-icon">📍</div>
+        <div class="branch-name">B.A.K Kadıköy</div>
+        <div class="branch-address">Moda Caddesi No: 17, Kadıköy, İstanbul</div>
+        <div class="branch-hours">Her gün: 07:30 – 22:00</div>
+        <div class="branch-badge">🛍️ Butik Ürün Noktası</div>
+      </div>
+      <div class="branch-card reveal">
+        <div class="branch-icon">📍</div>
+        <div class="branch-name">B.A.K Beşiktaş</div>
+        <div class="branch-address">Çarşı Sokak No: 8, Beşiktaş, İstanbul</div>
+        <div class="branch-hours">Pzt–Cum: 08:00 – 21:00 | Hft Sonu: 09:00 – 22:00</div>
+        <div class="branch-badge">🎶 Canlı Müzik</div>
+      </div>
+    </div>
+
+    <div class="map-placeholder reveal">
+      <div class="map-icon">🗺️</div>
+      <span>Harita Entegrasyonu Buraya Eklenecek</span>
+      <span style="font-size:0.75rem; opacity:0.6;">Google Maps API anahtarınızı ekleyin</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <p class="section-label reveal">— Bize Ulaşın</p>
+        <h2 class="section-title reveal">Her soru bir <em>konuşmaya</em> başlar.</h2>
+        <div class="divider reveal" style="background:var(--gold);"></div>
+        <div class="contact-details">
+          <div class="contact-row reveal">
+            <div class="contact-icon">📧</div>
+            <div class="contact-text">
+              <strong>E-posta</strong>
+              merhaba@bak.com.tr
+            </div>
+          </div>
+          <div class="contact-row reveal">
+            <div class="contact-icon">📞</div>
+            <div class="contact-text">
+              <strong>Telefon</strong>
+              +90 212 000 00 00
+            </div>
+          </div>
+          <div class="contact-row reveal">
+            <div class="contact-icon">📍</div>
+            <div class="contact-text">
+              <strong>Genel Merkez</strong>
+              İstiklal Caddesi No: 42, Beyoğlu, İstanbul
+            </div>
+          </div>
+          <div class="contact-row reveal">
+            <div class="contact-icon">🕐</div>
+            <div class="contact-text">
+              <strong>Çalışma Saatleri</strong>
+              Pazartesi – Cuma: 07:00 – 22:00
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal">
+        <div class="form-group">
+          <label>Adınız Soyadınız</label>
+          <input type="text" placeholder="Ahmet Yılmaz" id="f-name" />
+        </div>
+        <div class="form-group">
+          <label>E-posta</label>
+          <input type="email" placeholder="ahmet@ornek.com" id="f-email" />
+        </div>
+        <div class="form-group">
+          <label>Konu</label>
+          <select id="f-subject">
+            <option value="">Seçiniz...</option>
+            <option>Rezervasyon</option>
+            <option>Sipariş / Teslimat</option>
+            <option>Şikayet / Öneri</option>
+            <option>İş Birliği</option>
+            <option>Diğer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mesajınız</label>
+          <textarea placeholder="Bize ne söylemek istersiniz?" id="f-message"></textarea>
+        </div>
+        <button class="form-submit" id="form-submit-btn">Gönder →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo">B<span>.</span>A<span>.</span>K</a>
+        <p>bakıyorsun, içiyorsun ne ediyorsun.<br /><br />Her köşede bir hikâye, her yudumda bir an.</p>
+        <div class="footer-socials">
+          <div class="social-btn" title="Instagram">📸</div>
+          <div class="social-btn" title="Twitter/X">🐦</div>
+          <div class="social-btn" title="Facebook">📘</div>
+          <div class="social-btn" title="WhatsApp">💬</div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Menü</h4>
+        <ul>
+          <li><a href="#menu">Sıcak İçecekler</a></li>
+          <li><a href="#menu">Soğuk İçecekler</a></li>
+          <li><a href="#menu">Atıştırmalık</a></li>
+          <li><a href="#menu">Butik Ürünler</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sayfalar</h4>
+        <ul>
+          <li><a href="#about">Hakkımızda</a></li>
+          <li><a href="#gallery">Galeri</a></li>
+          <li><a href="#branches">Şubeler</a></li>
+          <li><a href="#contact">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Yasal</h4>
+        <ul>
+          <li><a href="#">Gizlilik Politikası</a></li>
+          <li><a href="#">Kullanım Koşulları</a></li>
+          <li><a href="#">Çerez Politikası</a></li>
+          <li><a href="#">KVKK</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 B.A.K — Tüm hakları saklıdır.</span>
+      <span>İstanbul, Türkiye 🇹🇷</span>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script>
+    /* --- NAV SCROLL --- */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    /* --- HAMBURGER --- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu  = document.getElementById('close-menu');
+
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+    closeMenu.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    document.querySelectorAll('.mob-link').forEach(l => {
+      l.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    /* --- MENU TABS --- */
+    const tabs = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.menu-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        cards.forEach(card => {
+          if (card.dataset.cat === filter) {
+            card.classList.add('visible');
+          } else {
+            card.classList.remove('visible');
+          }
+        });
+      });
+    });
+
+    /* --- SCROLL REVEAL --- */
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    /* --- TOAST --- */
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    /* --- CONTACT FORM --- */
+    document.getElementById('form-submit-btn').addEventListener('click', () => {
+      const name    = document.getElementById('f-name').value.trim();
+      const email   = document.getElementById('f-email').value.trim();
+      const subject = document.getElementById('f-subject').value;
+      const message = document.getElementById('f-message').value.trim();
+
+      if (!name || !email || !subject || !message) {
+        showToast('⚠️ Lütfen tüm alanları doldurun.');
+        return;
+      }
+      if (!email.includes('@')) {
+        showToast('⚠️ Geçerli bir e-posta girin.');
+        return;
+      }
+
+      showToast('✅ Mesajınız alındı. En kısa sürede dönüş yapacağız!');
+      document.getElementById('f-name').value    = '';
+      document.getElementById('f-email').value   = '';
+      document.getElementById('f-subject').value = '';
+      document.getElementById('f-message').value = '';
+    });
+
+    /* --- SMOOTH ACTIVE NAV HIGHLIGHT --- */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.style.color = link.getAttribute('href') === `#${id}`
+              ? 'var(--gold)' : '';
+            link.style.opacity = link.getAttribute('href') === `#${id}` ? '1' : '';
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
+</body>
+</html>
