@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kahve Projeleri | Dijital Vitrin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Orijinal Tasarım ve Renk Paleti (Korundu) ===== */
+    :root {
+      --dark-bg: #111111;
+      --card-bg: #1a1a1a;
+      --espresso: #2C1A0E;
+      --gold: #C49A3A;
+      --gold-light: #e0c78a;
+      --cream: #FAF7F2;
+      --text-gray: #aaaaaa;
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--cream);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    /* Kahve Dokulu Üst Alan */
+    header {
+      background: linear-gradient(rgba(17, 17, 17, 0.85), rgba(17, 17, 17, 0.98)), 
+                  url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200') center/cover;
+      background-attachment: fixed; /* yeni: hafif parallax */
+      padding: 80px 20px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+      position: relative;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 0 0 20px rgba(196,154,58,0.3); /* yeni: hafif altın ışıltı */
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: var(--text-gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Grid Yapısı */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    .grid-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      border-left: 4px solid var(--gold);
+      padding-left: 15px;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* yeni: başlık altı animasyonlu çizgi */
+    .grid-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 0;
+      height: 2px;
+      background-color: var(--gold);
+      transition: width 0.8s ease;
+    }
+
+    .grid-title.revealed::after {
+      width: 100%;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    /* Proje Kartları Tasarımı */
+    .project-card {
+      background-color: var(--card-bg);
+      border: 1px solid #222;
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      /* yeni: scroll animasyonu için başlangıç */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .project-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.02); /* hafif büyüme */
+      border-color: var(--gold);
+      box-shadow: 0 20px 40px rgba(196, 154, 58, 0.15);
+    }
+
+    .card-banner {
+      height: 160px;
+      background: linear-gradient(135deg, var(--espresso), #111);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border-bottom: 1px solid #222;
+      transition: background 0.5s ease;
+    }
+
+    .project-card:hover .card-banner {
+      background: linear-gradient(135deg, #3b2a1a, #1e1e1e); /* hoverda ton değişimi */
+    }
+
+    .card-content {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+
+    .project-card:hover .card-content h3 {
+      color: var(--gold-light);
+    }
+
+    .card-content p {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .card-btn {
+      align-self: flex-start;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: gap 0.2s, color 0.3s;
+    }
+
+    .project-card:hover .card-btn {
+      gap: 10px;
+      color: var(--gold-light);
+    }
+
+    /* Alt Bilgi */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #555;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+      margin-top: 40px;
+    }
+
+    /* ===== Yeni Eklenen Duyarlılık İyileştirmeleri ===== */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .grid-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 60px 15px;
+      }
+      .card-content {
+        padding: 20px;
+      }
+      .card-banner {
+        height: 130px;
+        font-size: 2.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Maarif Z Proje Atölyesi</h1>
+    <p>Web geliştirme yolculuğunda bugüne kadar tasarladığımız, kullanıcı deneyimine odaklanan premium web arayüzleri.</p>
+  </header>
+
+  <div class="container">
+    <h2 class="grid-title" id="gridTitle">Bu Zamana Kadar Yaptığımız Siteler</h2>
+    
+    <div class="projects-grid">
+
+      <a href="index18.html" target="_blank" class="project-card">
+        <div class="card-banner">☕</div>
+        <div class="card-content">
+          <h3>Premium Kafe & Butik</h3>
+          <p>B.A.K & DeepSeek esintileri taşıyan, koyu temalı ve gelişmiş menü sekmelerine sahip modern kafe arayüzü.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+      <a href="depseek.html" target="_blank" class="project-card">
+        <div class="card-banner">✨</div>
+        <div class="card-content">
+          <h3>Kafe Ara - Butik Lezzet</h3>
+          <p>Altın tonları ve serif yazı tipleriyle harmanlanmış, şık ve yalın hatlara sahip tam boy butik kahve konsepti.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+      <a href="menu.html" target="_blank" class="project-card">
+        <div class="card-banner">📋</div>
+        <div class="card-content">
+          <h3>B.A.K — Dijital Menü</h3>
+          <p>Tamamen tablet ve mobil uyumlu, canlı tarih destekli ve kategori geçişli premium dijital ürün kataloğu.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+      <a href="index (3) (1).html" target="_blank" class="project-card">
+        <div class="card-banner">🤎</div>
+        <div class="card-content">
+          <h3>B.A.K Anasayfa & İletişim</h3>
+          <p>"Bakıyorsun, içiyorsun" mottolu, dinamik bildirim (toast) ve akıllı navigasyon vurgusuna sahip kurumsal sayfa.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+      <a href="index (5) (1).html" target="_blank" class="project-card">
+        <div class="card-banner">🟢</div>
+        <div class="card-content">
+          <h3>Demo Cafe | Lezzet Durağı</h3>
+          <p>Yumuşak dokunuşlu kaydırıcı (Hero Slider), swipe desteği ve canlı yeşil tonlarıyla enerjik bir kafe demosu.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+      <a href="index (4) (1).html" target="_blank" class="project-card">
+        <div class="card-banner">🌱</div>
+        <div class="card-content">
+          <h3>Starbucks Konsept Vitrin</h3>
+          <p>Göz yormayan ikonik yeşil ve krem paletiyle kurgulanmış, minimalist kart düzenine sahip ürün inceleme arayüzü.</p>
+          <span class="card-btn">Siteyi Keşfet &gt;</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; <span id="currentYear">2026</span> Proje Geliştirme ve Yönetim Altyapısı. Tüm hakları saklıdır.</p>
+  </footer>
+
+  <!-- ===== Gelişmiş Etkileşimler İçin JavaScript (Yeni) ===== -->
+  <script>
+    (function() {
+      // Dinamik yıl gösterimi
+      const yearSpan = document.getElementById('currentYear');
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+
+      // Scroll ile kart görünürlüğü ve başlık çizgisi animasyonu
+      const cards = document.querySelectorAll('.project-card');
+      const gridTitle = document.getElementById('gridTitle');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      cards.forEach(card => observer.observe(card));
+
+      // Başlık alt çizgisi için ayrı observer
+      if (gridTitle) {
+        const titleObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+            }
+          });
+        }, { threshold: 0.5 });
+        titleObserver.observe(gridTitle);
+      }
+
+      // Header parallax efekti (opsiyonel, mevcut fixed zaten verildi)
+    })();
+  </script>
+
+</body>
+</html>
