@@ -1,0 +1,349 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  .mz-root {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+    max-width: 680px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mz-hero {
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 2.5rem 0 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mz-hero-accent {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 700;
+    color: var(--color-border-tertiary);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .mz-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 0 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mz-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-border-secondary);
+  }
+
+  .mz-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .mz-title em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .mz-subtitle {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    max-width: 420px;
+    margin: 0 0 2rem;
+  }
+
+  .mz-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border-tertiary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+
+  .mz-stat {
+    background: var(--color-background-secondary);
+    padding: 1rem 0.75rem;
+    text-align: center;
+  }
+
+  .mz-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .mz-stat-label {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    line-height: 1.3;
+  }
+
+  .mz-section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 0 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mz-section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--color-border-tertiary);
+  }
+
+  .mz-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+
+  .mz-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .mz-card:hover {
+    border-color: var(--color-border-secondary);
+    background: var(--color-background-secondary);
+  }
+
+  .mz-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .mz-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .mz-card-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-text-tertiary);
+  }
+
+  .mz-card-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin-bottom: 4px;
+  }
+
+  .mz-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 0.4rem;
+    line-height: 1.3;
+  }
+
+  .mz-card-desc {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0 0 0.9rem;
+  }
+
+  .mz-card-link {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mz-card-link i {
+    font-size: 13px;
+    transition: transform 0.15s;
+  }
+
+  .mz-card:hover .mz-card-link i {
+    transform: translate(2px, -2px);
+  }
+
+  .mz-footer {
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .mz-footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .mz-footer-copy {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+  }
+</style>
+
+<h2 class="sr-only">Maarif Z Proje Atölyesi — 6 web projesi içeren portföy tanıtım sayfası</h2>
+
+<div class="mz-root">
+
+  <div class="mz-hero">
+    <div class="mz-hero-accent" aria-hidden="true">6</div>
+    <p class="mz-eyebrow">Web geliştirme &amp; tasarım</p>
+    <h1 class="mz-title">Her arayüz<br>bir <em>hikâye</em> anlatır.</h1>
+    <p class="mz-subtitle">Kullanıcı deneyimine odaklanan premium web arayüzleri — her projede farklı bir konsept, aynı özen.</p>
+
+    <div class="mz-stats">
+      <div class="mz-stat">
+        <div class="mz-stat-num">6</div>
+        <div class="mz-stat-label">Tamamlanan proje</div>
+      </div>
+      <div class="mz-stat">
+        <div class="mz-stat-num">3+</div>
+        <div class="mz-stat-label">Farklı konsept</div>
+      </div>
+      <div class="mz-stat">
+        <div class="mz-stat-num">100%</div>
+        <div class="mz-stat-label">Mobil uyumlu</div>
+      </div>
+      <div class="mz-stat">
+        <div class="mz-stat-num">☕</div>
+        <div class="mz-stat-label">Kahve temalı</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-top: 2rem;">
+    <p class="mz-section-label">Bu zamana kadar yaptığımız siteler</p>
+
+    <div class="mz-grid">
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">☕</div>
+          <span class="mz-card-num">01</span>
+        </div>
+        <div class="mz-card-tag">Premium kafe</div>
+        <h3 class="mz-card-title">Premium Kafe & Butik</h3>
+        <p class="mz-card-desc">B.A.K esintileri taşıyan, koyu temalı ve gelişmiş menü sekmelerine sahip modern kafe arayüzü.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">✨</div>
+          <span class="mz-card-num">02</span>
+        </div>
+        <div class="mz-card-tag">Butik konsept</div>
+        <h3 class="mz-card-title">Kafe Ara — Butik Lezzet</h3>
+        <p class="mz-card-desc">Altın tonları ve serif yazı tipleriyle harmanlanmış, şık ve yalın hatlara sahip tam boy butik kahve konsepti.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">📋</div>
+          <span class="mz-card-num">03</span>
+        </div>
+        <div class="mz-card-tag">Dijital menü</div>
+        <h3 class="mz-card-title">B.A.K — Dijital Menü</h3>
+        <p class="mz-card-desc">Tamamen tablet ve mobil uyumlu, canlı tarih destekli ve kategori geçişli premium dijital ürün kataloğu.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">🤎</div>
+          <span class="mz-card-num">04</span>
+        </div>
+        <div class="mz-card-tag">Kurumsal sayfa</div>
+        <h3 class="mz-card-title">B.A.K Anasayfa & İletişim</h3>
+        <p class="mz-card-desc">"Bakıyorsun, içiyorsun" mottolu, dinamik bildirim ve akıllı navigasyon vurgusuna sahip kurumsal sayfa.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">🟢</div>
+          <span class="mz-card-num">05</span>
+        </div>
+        <div class="mz-card-tag">Kafe demo</div>
+        <h3 class="mz-card-title">Demo Cafe — Lezzet Durağı</h3>
+        <p class="mz-card-desc">Yumuşak kaydırıcı, swipe desteği ve canlı yeşil tonlarıyla enerjik bir kafe demosu.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+      <div class="mz-card">
+        <div class="mz-card-top">
+          <div class="mz-card-icon">🌱</div>
+          <span class="mz-card-num">06</span>
+        </div>
+        <div class="mz-card-tag">Ürün vitrini</div>
+        <h3 class="mz-card-title">Starbucks Konsept Vitrin</h3>
+        <p class="mz-card-desc">İkonik yeşil ve krem paletiyle kurgulanmış, minimalist kart düzenine sahip ürün inceleme arayüzü.</p>
+        <span class="mz-card-link">Siteyi keşfet <i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
+      </div>
+
+    </div>
+
+    <div class="mz-footer">
+      <span class="mz-footer-brand">Maarif Z Proje Atölyesi</span>
+      <span class="mz-footer-copy">© 2026 — Tüm hakları saklıdır.</span>
+    </div>
+  </div>
+
+</div>
