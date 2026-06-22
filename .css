@@ -24,6 +24,7 @@ body {
   color: var(--ink);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* ★ Yatay kaydırmayı tamamen kaldırır, tam ekran hissi verir */
 }
 
 /* ── NAV ── */
@@ -60,7 +61,7 @@ nav {
 
 /* ── HERO ── */
 .hero {
-  min-height: 100vh;
+  min-height: 100vh; /* Açılışta tam ekran yükseklik */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
